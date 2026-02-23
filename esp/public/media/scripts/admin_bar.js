@@ -81,12 +81,27 @@ if (currentPrograms && currentPrograms.forEach) {
     });
 }
 
+function escapeAdminToolbarLinkHtml(value) {
+    return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+var toolbarLinks = (typeof adminToolbarLinks !== "undefined" && adminToolbarLinks.length) ? adminToolbarLinks : [
+    {text: 'Manage all programs', link: '/manage/programs/'},
+    {text: 'Manage static pages', link: '/manage/pages'},
+    {text: 'Manage media files', link: '/admin/filebrowser/browse/'},
+    {text: 'Manage theme settings', link: '/themes/'}
+];
+var toolbarLinkHtml = toolbarLinks.map(function(link) {
+    return '<a href="' + escapeAdminToolbarLinkHtml(link.link) + '">' + escapeAdminToolbarLinkHtml(link.text) + '</a>';
+}).join('<br />');
+
 ESP.registerAdminModule({
-    content_html: '<a href="/manage/programs/">Manage all programs</a><br/>' +
-                  '<a href="/manage/pages">Manage static pages</a><br />' +
-                  (debug ? '<a href="/admin/">Administration pages</a><br />' : '') +
-                  '<a href="/admin/filebrowser/browse/">Manage media files</a><br />' +
-                  '<a href="/themes/">Manage theme settings</a>',
+    content_html: toolbarLinkHtml + (debug ? '<br /><a href="/admin/">Administration pages</a>' : ''),
     name: 'Other',
     displayName: 'Other Important Links'
 });

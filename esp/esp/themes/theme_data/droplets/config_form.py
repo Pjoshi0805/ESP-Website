@@ -19,6 +19,14 @@ class ConfigForm(ThemeConfigurationForm):
     contact_links = forms.Field(required = False, widget=ContactFieldsWidget,
                                 label='Contact links below contact info (use absolute or relative URLs)',
                                 initial=[{"text": "contact us", "link": "/contact.html"}])
+    admin_toolbar_links = forms.Field(required = False, widget=ContactFieldsWidget,
+                                      label='Custom links in the bottom section of the admin toolbar',
+                                      initial=[
+                                          {"text": "Manage all programs", "link": "/manage/programs/"},
+                                          {"text": "Manage static pages", "link": "/manage/pages"},
+                                          {"text": "Manage media files", "link": "/admin/filebrowser/browse/"},
+                                          {"text": "Manage theme settings", "link": "/themes/"},
+                                      ])
     nav_structure = forms.Field(widget=NavStructureWidgetWithIcons,
                                 help_text="Note: If the first 5 characters of a user's request path match the first 5 characters of\
                                            a header's link, then that header will be highlighted.")

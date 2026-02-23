@@ -22,6 +22,16 @@
       {% endfor %}
       ];
       var debug = {{ settings.DEBUG|yesno:"true,false" }};
+      var adminToolbarLinks = [
+      {% if theme.admin_toolbar_links %}
+      {% for link in theme.admin_toolbar_links %}
+          {
+              text: "{{ link.text|escapejs }}",
+              link: "{{ link.link|escapejs }}"
+          },
+      {% endfor %}
+      {% endif %}
+      ];
       </script>
       <script type="text/javascript" src="/media/scripts/theme/admin_bar.js"> </script>
       {% comment %} === End Admin Toolbar === {% endcomment %}
